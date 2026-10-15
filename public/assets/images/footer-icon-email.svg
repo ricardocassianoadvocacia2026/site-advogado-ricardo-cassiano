@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 225 225" width="225" height="225">
+  <defs>
+    <!-- Gradiente Dourado Metálico Original -->
+    <linearGradient id="goldBorderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b56a27"/>
+      <stop offset="15%" stop-color="#dfae4f"/>
+      <stop offset="35%" stop-color="#f5ea75"/>
+      <stop offset="55%" stop-color="#dfae4f"/>
+      <stop offset="80%" stop-color="#f5ea75"/>
+      <stop offset="100%" stop-color="#b56a27"/>
+    </linearGradient>
+    <linearGradient id="goldIconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e2b459"/>
+      <stop offset="30%" stop-color="#f5ea75"/>
+      <stop offset="70%" stop-color="#dfae4f"/>
+      <stop offset="100%" stop-color="#b56a27"/>
+    </linearGradient>
+    <radialGradient id="cardInnerBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#182324"/>
+      <stop offset="100%" stop-color="#0c1516"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Fundo Chanfrado Interior -->
+  <polygon points="167,26 57,26 25,58 25,167 57,200 167,200 200,167 200,58" fill="url(#cardInnerBg)"/>
+
+  <!-- Moldura Chanfrada Dourada (Mesma geometria dos cards de serviços) -->
+  <polygon points="167,26 57,26 25,58 25,167 57,200 167,200 200,167 200,58" fill="none" stroke="url(#goldBorderGrad)" stroke-width="4.5" stroke-linejoin="round"/>
+  
+  <!-- Borda interna fina dourada com transparência -->
+  <polygon points="162,33 62,33 32,63 32,162 62,193 162,193 193,162 193,63" fill="none" stroke="url(#goldBorderGrad)" stroke-width="1" stroke-opacity="0.35"/>
+
+  <!-- Ícone de E-mail Vetorial em Dourado Metálico -->
+  <g transform="translate(62.5, 68)" fill="url(#goldIconGrad)">
+    <path d="M90 0H10C4.5 0 0 4.5 0 10v70c0 5.5 4.5 10 10 10h80c5.5 0 10-4.5 10-10V10c0-5.5-4.5-10-10-10zm-3.6 11.2L50 43.8 13.6 11.2h72.8zM8.8 77.6V18.1l39 34.6c1.2 1.1 2.8 1.7 4.2 1.7 1.5 0 3-.6 4.2-1.7l39-34.6v59.5H8.8z"/>
+  </g>
+</svg>

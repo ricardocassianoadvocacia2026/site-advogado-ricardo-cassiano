@@ -2,7 +2,6 @@
   "name": "site-advogado-ricardo-cassiano",
   "version": "1.0.0",
   "description": "Website institucional do Dr. Ricardo Cassiano - Reconstrução fiel independente do WordPress/Elementor",
-  "main": "server.js",
   "scripts": {
     "build": "node build.js",
     "start": "node server.js",

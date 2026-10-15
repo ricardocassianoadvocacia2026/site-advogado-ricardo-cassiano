@@ -1,0 +1,50 @@
+:root {
+  /* Colors from original design */
+  --color-primary: #DFAE4F;
+  --color-primary-hover: #C09239;
+  --color-primary-light: #F5EA75;
+  --color-primary-dark: #B56A27;
+
+  --color-bg-dark: #0D1E1E;
+  --color-bg-darker: #071518;
+  --color-bg-card: #0E181B;
+  --color-bg-light: #F8F9FA;
+  --color-bg-white: #FFFFFF;
+
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #E0E0E0;
+  --color-text-muted: #8E9B9B;
+  --color-text-dark: #0D1E1E;
+  --color-text-body-dark: #5F5F5F;
+
+  --color-gold-gradient: linear-gradient(135deg, #B56A27 0%, #DFAE4F 50%, #F5EA75 100%);
+  --color-gold-button: linear-gradient(90deg, #DFAE4F 0%, #F5EA75 50%, #DFAE4F 100%);
+  --color-dark-gradient: linear-gradient(180deg, #0D1E1E 0%, #071518 100%);
+
+  --color-border-dark: rgba(223, 174, 79, 0.15);
+  --color-border-card: rgba(255, 255, 255, 0.08);
+  --color-border-card-hover: rgba(223, 174, 79, 0.6);
+
+  /* Typography */
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* Layout */
+  --container-max-width: 1140px;
+  --header-height: 110px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
+  --shadow-gold: 0 8px 24px rgba(223, 174, 79, 0.25);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}

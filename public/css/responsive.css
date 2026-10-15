@@ -1,0 +1,276 @@
+/* ==========================================================================
+   RESPONSIVE STYLES
+   ========================================================================== */
+
+/* Laptop & Tablet Landscape (max-width: 1024px) */
+@media (max-width: 1024px) {
+  :root {
+    --header-height: 100px;
+  }
+
+  .header-logo img {
+    height: 82px;
+  }
+
+  .header-cta-btn {
+    display: inline-flex;
+  }
+
+  .footer-call-btn {
+    display: inline-flex;
+  }
+
+  .nav-menu {
+    gap: 20px;
+  }
+
+  .nav-link {
+    font-size: 14px;
+  }
+
+  .hero-container {
+    gap: 24px;
+  }
+
+  .areas-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .jornada-content-side {
+    padding: 60px 40px;
+  }
+}
+
+/* Tablet Portrait (max-width: 768px) */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 90px;
+  }
+
+  .header-logo img {
+    height: 72px;
+  }
+
+  .nav-menu {
+    display: none;
+  }
+
+  .header-cta-btn {
+    display: inline-flex;
+    margin-left: auto;
+    margin-right: 16px;
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .footer-call-btn {
+    display: inline-flex;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    padding-top: calc(var(--header-height) + 15px);
+    padding-bottom: 0;
+  }
+
+  .areas-section {
+    margin-top: -40px;
+  }
+
+  .hero-container {
+    grid-template-columns: 1fr;
+    text-align: left;
+    gap: 30px;
+  }
+
+  .hero-content {
+    align-items: flex-start;
+    align-self: auto;
+    margin-top: 0;
+    padding-bottom: 20px;
+  }
+
+  .hero-image-wrap {
+    justify-content: center;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* Sobre Mim */
+  .sobre-mim-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .sobre-mim-image-wrap {
+    order: -1;
+  }
+
+  .sobre-mim-photo {
+    max-width: 360px;
+  }
+
+  /* Jornada Section */
+  .jornada-section {
+    grid-template-columns: 1fr;
+  }
+
+  .jornada-image-side {
+    min-height: 320px;
+  }
+
+  .jornada-content-side {
+    padding: 50px 24px;
+  }
+
+  /* Localização Section */
+  .localizacao-container {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .localizacao-brand img {
+    max-width: 240px;
+  }
+
+  /* Footer */
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  .footer-col:last-child {
+    grid-column: span 2;
+  }
+}
+
+/* Mobile Devices (max-width: 480px / 390px) */
+@media (max-width: 480px) {
+  :root {
+    --header-height: 82px;
+  }
+
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .header-logo img {
+    height: 60px;
+  }
+
+  .header-cta-btn {
+    display: inline-flex;
+    margin-left: auto;
+    margin-right: 10px;
+    padding: 6px 12px;
+    font-size: 11px;
+    gap: 5px;
+  }
+
+  .header-cta-btn svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .hero-title {
+    font-size: 38px;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+  }
+
+  .btn-gold {
+    width: 100%;
+    padding: 14px 20px;
+  }
+
+  .hero-social-proof {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  /* Áreas de Atuação */
+  .areas-section {
+    padding: 70px 0;
+  }
+
+  .areas-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .area-card {
+    padding: 26px 20px;
+  }
+
+  .area-title {
+    font-size: 22px;
+  }
+
+  /* Sobre Mim */
+  .sobre-mim-section {
+    padding: 70px 0;
+  }
+
+  .sobre-mim-photo {
+    max-width: 100%;
+  }
+
+  .sobre-mim-badges {
+    gap: 12px;
+  }
+
+  .badge-item {
+    font-size: 13px;
+  }
+
+  /* Jornada */
+  .jornada-content-side {
+    padding: 40px 18px;
+  }
+
+  .jornada-title {
+    font-size: 28px;
+  }
+
+  .jornada-feature {
+    gap: 14px;
+  }
+
+  .jornada-feature-title {
+    font-size: 20px;
+  }
+
+  /* Footer */
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .footer-col:last-child {
+    grid-column: span 1;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .whatsapp-btn {
+    width: 52px;
+    height: 52px;
+  }
+
+  .whatsapp-btn svg {
+    width: 28px;
+    height: 28px;
+  }
+}
