@@ -1,0 +1,19 @@
+{
+  "name": "site-advogado-ricardo-cassiano",
+  "version": "1.0.0",
+  "description": "Website institucional do Dr. Ricardo Cassiano - Reconstrução fiel independente do WordPress/Elementor",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "echo 'Static build ready. No compilation required.'"
+  },
+  "keywords": [
+    "advocacia",
+    "direito",
+    "ricardo-cassiano",
+    "landing-page"
+  ],
+  "author": "Dr. Ricardo Cassiano",
+  "license": "UNLICENSED"
+}
