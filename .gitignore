@@ -35,3 +35,4 @@ Thumbs.db
 # Temporary / Scratch
 scratch/
 index1.html
+.playwright-mcp/
