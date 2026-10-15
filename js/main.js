@@ -84,6 +84,13 @@ function initSpotlightCards() {
       card.style.setProperty('--mouse-y', `${y}px`);
     });
   });
+
+  cardsContainer.addEventListener('mouseleave', () => {
+    cards.forEach((card) => {
+      card.style.setProperty('--mouse-x', '-999px');
+      card.style.setProperty('--mouse-y', '-999px');
+    });
+  });
 }
 
 /* ==========================================================================

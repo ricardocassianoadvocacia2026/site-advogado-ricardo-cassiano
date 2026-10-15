@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 225 225" width="225" height="225">
+  <defs>
+    <!-- Gradiente Dourado Metálico Original -->
+    <linearGradient id="goldPhoneBorderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b56a27"/>
+      <stop offset="15%" stop-color="#dfae4f"/>
+      <stop offset="35%" stop-color="#f5ea75"/>
+      <stop offset="55%" stop-color="#dfae4f"/>
+      <stop offset="80%" stop-color="#f5ea75"/>
+      <stop offset="100%" stop-color="#b56a27"/>
+    </linearGradient>
+    <linearGradient id="goldPhoneIconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e2b459"/>
+      <stop offset="30%" stop-color="#f5ea75"/>
+      <stop offset="70%" stop-color="#dfae4f"/>
+      <stop offset="100%" stop-color="#b56a27"/>
+    </linearGradient>
+    <radialGradient id="phoneCardInnerBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#182324"/>
+      <stop offset="100%" stop-color="#0c1516"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Fundo Chanfrado Interior -->
+  <polygon points="167,26 57,26 25,58 25,167 57,200 167,200 200,167 200,58" fill="url(#phoneCardInnerBg)"/>
+
+  <!-- Moldura Chanfrada Dourada (Mesma geometria dos cards de serviços) -->
+  <polygon points="167,26 57,26 25,58 25,167 57,200 167,200 200,167 200,58" fill="none" stroke="url(#goldPhoneBorderGrad)" stroke-width="4.5" stroke-linejoin="round"/>
+  
+  <!-- Borda interna fina dourada com transparência -->
+  <polygon points="162,33 62,33 32,63 32,162 62,193 162,193 193,162 193,63" fill="none" stroke="url(#goldPhoneBorderGrad)" stroke-width="1" stroke-opacity="0.35"/>
+
+  <!-- Ícone de Telefone Vetorial em Dourado Metálico -->
+  <g transform="translate(68, 68)" fill="url(#goldPhoneIconGrad)">
+    <path d="M85.9 63.8l-18.4-7.9c-2.3-1-5.1-.4-6.8 1.4L52.5 65.5C41 59.6 31.4 50 25.5 38.5l8.2-8.2c1.8-1.8 2.4-4.5 1.4-6.8L27.2 5.1C26.1 2.3 23.3.5 20.2.5H6.5C2.9.5 0 3.4 0 7c0 43.6 35.4 79 79 79 3.6 0 6.5-2.9 6.5-6.5V72.8c0-3.1-1.8-5.9-4.6-7l5-2z"/>
+  </g>
+</svg>
