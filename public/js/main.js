@@ -527,7 +527,6 @@ function initContactForm() {
         </svg>
         <div>
           <strong>${response.message || 'Solicitação enviada com sucesso! Entraremos em contato assim que possível.'}</strong>
-          ${response.warning ? `<p style="font-size:12px;margin-top:4px;opacity:0.85;">${response.warning}</p>` : ''}
         </div>
       `;
       feedbackBox.style.display = 'flex';

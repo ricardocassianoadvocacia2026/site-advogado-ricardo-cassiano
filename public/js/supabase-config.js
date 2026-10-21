@@ -7,17 +7,16 @@
 (function (window) {
   'use strict';
 
-  // Configurações padrão (Podem ser preenchidas diretamente aqui ou no painel CRM)
+  // Configurações do Supabase para conexão oficial em produção
   const DEFAULT_CONFIG = {
-    url: '',
-    anonKey: '',
-    edgeFunctionUrl: '' // Opcional, caso use Supabase Edge Function dedicada
+    url: 'https://vohrgcwisxzbleglcryd.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZvaHJnY3dpc3h6YmxlZ2xjcnlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1OTQ1ODAsImV4cCI6MjEwODE3MDU4MH0.IJPYxwbHP5eqGeCshyUQDDOQkzQUPXIAoR5m93GPhZI',
+    edgeFunctionUrl: ''
   };
 
   const STORAGE_KEYS = {
     URL: 'RC_SUPABASE_URL',
-    ANON_KEY: 'RC_SUPABASE_ANON_KEY',
-    LOCAL_LEADS: 'RC_DEV_MOCK_LEADS' // Fallback para visualização imediata se chaves não informadas
+    ANON_KEY: 'RC_SUPABASE_ANON_KEY'
   };
 
   let clientInstance = null;
@@ -109,68 +108,47 @@
       return { success: true, message: 'Solicitação enviada com sucesso!' };
     }
 
-    const client = getClient();
-
-    // Se o Supabase estiver configurado, envia diretamente pelo Supabase Client (RLS)
-    if (client) {
-      try {
-        const payload = {
-          nome: String(nome).trim(),
-          whatsapp: String(whatsapp).trim(),
-          apenas_contato: Boolean(apenas_contato),
-          descricao_caso: apenas_contato ? null : (descricao_caso ? String(descricao_caso).trim() : null),
-          status: 'Novo'
-        };
-
-        const { data, error } = await client
-          .from('solicitacoes')
-          .insert([payload])
-          .select('id, created_at')
-          .single();
-
-        if (error) {
-          console.error('Erro retornado pelo Supabase:', error);
-          throw new Error(error.message || 'Erro ao gravar solicitação no banco.');
-        }
-
-        return {
-          success: true,
-          message: 'Solicitação enviada com sucesso! Entraremos em contato assim que possível.',
-          data: data
-        };
-      } catch (err) {
-        console.error('Falha ao enviar para Supabase:', err);
-        throw err;
-      }
+    const config = getStoredConfig();
+    if (!window.supabase) {
+      throw new Error('Biblioteca do Supabase não carregada.');
     }
 
-    // Modo de demonstração / Fallback local para ambiente de desenvolvimento quando chaves ainda não foram configuradas
-    console.info('Aviso: Supabase URL e Anon Key ainda não foram inseridas. Registrando no armazenamento de desenvolvimento para testes locais.');
-    
-    const localLeads = JSON.parse(localStorage.getItem(STORAGE_KEYS.LOCAL_LEADS) || '[]');
-    const newLead = {
-      id: 'demo-' + Date.now().toString(36) + '-' + Math.random().toString(36).substr(2, 5),
-      nome: String(nome).trim(),
-      whatsapp: String(whatsapp).trim(),
-      apenas_contato: Boolean(apenas_contato),
-      descricao_caso: apenas_contato ? null : (descricao_caso ? String(descricao_caso).trim() : null),
-      status: 'Novo',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      is_local_mock: true
-    };
-    localLeads.unshift(newLead);
-    localStorage.setItem(STORAGE_KEYS.LOCAL_LEADS, JSON.stringify(localLeads));
+    // Cliente anônimo exclusivo para envio público (sem herdar sessões ou tokens de admin expirados)
+    const publicClient = window.supabase.createClient(config.url, config.anonKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false
+      }
+    });
 
-    // Notifica eventuais abas locais do admin
-    window.dispatchEvent(new CustomEvent('rc-local-lead-created', { detail: newLead }));
+    try {
+      const payload = {
+        nome: String(nome).trim(),
+        whatsapp: String(whatsapp).trim(),
+        apenas_contato: Boolean(apenas_contato),
+        descricao_caso: apenas_contato ? null : (descricao_caso ? String(descricao_caso).trim() : null),
+        status: 'Novo'
+      };
 
-    return {
-      success: true,
-      message: 'Solicitação enviada com sucesso! Entraremos em contato assim que possível.',
-      data: newLead,
-      warning: 'Salvo em modo local (configure o Supabase para sincronização em nuvem).'
-    };
+      // Importante: NÃO encadear .select() pois visitantes anônimos (RLS) têm permissão exclusiva de INSERT
+      const { error } = await publicClient
+        .from('solicitacoes')
+        .insert([payload]);
+
+      if (error) {
+        console.error('Erro retornado pelo Supabase:', error);
+        throw new Error(error.message || 'Erro ao gravar solicitação no banco.');
+      }
+
+      return {
+        success: true,
+        message: 'Solicitação enviada com sucesso! Entraremos em contato assim que possível.'
+      };
+    } catch (err) {
+      console.error('Falha ao enviar para Supabase:', err);
+      throw err;
+    }
   }
 
   // Exporta objeto global
