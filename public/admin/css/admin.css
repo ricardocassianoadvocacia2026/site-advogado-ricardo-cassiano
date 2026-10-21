@@ -1,0 +1,996 @@
+/* ==========================================================================
+   RICARDO CASSIANO ADVOGADO - PAINEL CRM ADMINISTRATIVO
+   ========================================================================== */
+
+:root {
+  --crm-bg: #061113;
+  --crm-card: #0A181B;
+  --crm-card-hover: #0E2226;
+  --crm-border: rgba(223, 174, 79, 0.2);
+  --crm-border-light: rgba(255, 255, 255, 0.08);
+  --crm-gold: #DFAE4F;
+  --crm-gold-light: #F5EA75;
+  --crm-gold-hover: #C09239;
+  --crm-text: #FFFFFF;
+  --crm-text-muted: #8E9B9B;
+  --crm-text-subtle: #617070;
+  
+  --status-novo-bg: rgba(223, 174, 79, 0.15);
+  --status-novo-text: #F5EA75;
+  --status-novo-border: rgba(223, 174, 79, 0.4);
+
+  --status-atend-bg: rgba(56, 149, 255, 0.15);
+  --status-atend-text: #7EC1FF;
+  --status-atend-border: rgba(56, 149, 255, 0.4);
+
+  --status-aguard-bg: rgba(255, 167, 38, 0.15);
+  --status-aguard-text: #FFBE76;
+  --status-aguard-border: rgba(255, 167, 38, 0.4);
+
+  --status-concl-bg: rgba(75, 181, 67, 0.15);
+  --status-concl-text: #96EBA3;
+  --status-concl-border: rgba(75, 181, 67, 0.4);
+
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --radius: 8px;
+  --radius-lg: 14px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--crm-bg);
+  color: var(--crm-text);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   TELA DE AUTENTICAÇÃO (LOGIN)
+   ========================================================================== */
+.auth-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  background: radial-gradient(circle at 50% 20%, #0E2226 0%, #061113 70%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--crm-card);
+  border: 1px solid var(--crm-border);
+  border-radius: var(--radius-lg);
+  padding: 40px 36px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+.auth-logo {
+  max-width: 240px;
+  height: auto;
+  margin-bottom: 24px;
+}
+
+.auth-header h1 {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--crm-text);
+  margin-bottom: 6px;
+}
+
+.auth-header p {
+  font-size: 13.5px;
+  color: var(--crm-text-muted);
+  margin-bottom: 20px;
+}
+
+.auth-connection-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  font-size: 12.5px;
+  margin-bottom: 20px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.auth-connection-badge.is-warning {
+  background: rgba(223, 174, 79, 0.12);
+  border: 1px solid rgba(223, 174, 79, 0.35);
+  color: #F5EA75;
+}
+
+.auth-connection-badge.is-connected {
+  background: rgba(75, 181, 67, 0.12);
+  border: 1px solid rgba(75, 181, 67, 0.35);
+  color: #96EBA3;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  text-align: left;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #C0C8C8;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.form-input {
+  width: 100%;
+  height: 46px;
+  background: rgba(6, 17, 19, 0.85);
+  border: 1px solid var(--crm-border-light);
+  border-radius: var(--radius);
+  padding: 0 16px;
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--crm-gold);
+  box-shadow: 0 0 0 3px rgba(223, 174, 79, 0.15);
+  background: rgba(6, 17, 19, 1);
+}
+
+.btn-auth {
+  margin-top: 10px;
+  height: 48px;
+  background: linear-gradient(90deg, #DFAE4F 0%, #F5EA75 50%, #DFAE4F 100%);
+  color: #061113;
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-auth:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 6px 20px rgba(223, 174, 79, 0.3);
+}
+
+.btn-auth:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.auth-error {
+  display: none;
+  padding: 12px 16px;
+  background: rgba(180, 40, 40, 0.25);
+  border: 1px solid rgba(230, 90, 90, 0.4);
+  border-radius: var(--radius);
+  color: #FFA5A5;
+  font-size: 13px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.auth-config-toggle {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--crm-border-light);
+  font-size: 12px;
+  color: var(--crm-text-muted);
+}
+
+.auth-config-toggle a {
+  color: var(--crm-gold);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   APP HEADER
+   ========================================================================== */
+.crm-header {
+  background: var(--crm-card);
+  border-bottom: 1px solid var(--crm-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 14px 28px;
+}
+
+.crm-header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.crm-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.crm-brand-logo {
+  height: 38px;
+  width: auto;
+}
+
+.crm-badge-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.crm-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--crm-text);
+  line-height: 1.1;
+}
+
+.crm-subtitle {
+  font-size: 11.5px;
+  color: var(--crm-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.crm-user-panel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.realtime-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(75, 181, 67, 0.12);
+  border: 1px solid rgba(75, 181, 67, 0.35);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 12px;
+  color: #8CE39B;
+}
+
+.realtime-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4BB543;
+  box-shadow: 0 0 8px #4BB543;
+  animation: pulseDot 2s infinite;
+}
+
+.user-email {
+  font-size: 13px;
+  color: var(--crm-text-muted);
+}
+
+.btn-logout {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--crm-border-light);
+  color: #C0C8C8;
+  padding: 7px 14px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-logout:hover {
+  background: rgba(230, 90, 90, 0.15);
+  border-color: rgba(230, 90, 90, 0.4);
+  color: #FF9B9B;
+}
+
+/* ==========================================================================
+   MAIN DASHBOARD CONTENT
+   ========================================================================== */
+.crm-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 28px 24px 60px 24px;
+}
+
+/* Metrics Cards */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.metric-card {
+  background: var(--crm-card);
+  border: 1px solid var(--crm-border-light);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.metric-card:hover {
+  border-color: var(--crm-border);
+}
+
+.metric-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.metric-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.metric-total .metric-icon {
+  background: rgba(223, 174, 79, 0.12);
+  color: var(--crm-gold);
+}
+
+.metric-novo .metric-icon {
+  background: var(--status-novo-bg);
+  color: var(--status-novo-text);
+}
+
+.metric-atendimento .metric-icon {
+  background: var(--status-atend-bg);
+  color: var(--status-atend-text);
+}
+
+.metric-aguardando .metric-icon {
+  background: var(--status-aguard-bg);
+  color: var(--status-aguard-text);
+}
+
+.metric-concluido .metric-icon {
+  background: var(--status-concl-bg);
+  color: var(--status-concl-text);
+}
+
+.metric-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-label {
+  font-size: 12px;
+  color: var(--crm-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.metric-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.1;
+  margin-top: 2px;
+}
+
+/* Filters & Search Toolbar */
+.toolbar-card {
+  background: var(--crm-card);
+  border: 1px solid var(--crm-border-light);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.search-box {
+  position: relative;
+  flex: 1 1 300px;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+}
+
+.search-box svg {
+  position: absolute;
+  left: 14px;
+  width: 17px;
+  height: 17px;
+  color: var(--crm-text-muted);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  height: 42px;
+  background: rgba(6, 17, 19, 0.85);
+  border: 1px solid var(--crm-border-light);
+  border-radius: var(--radius);
+  padding: 0 36px 0 38px;
+  color: #FFFFFF;
+  font-size: 13.5px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: var(--crm-gold);
+  background: rgba(6, 17, 19, 1);
+}
+
+.search-clear {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--crm-text-muted);
+  font-size: 16px;
+  cursor: pointer;
+  display: none;
+}
+
+.filter-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.status-filter-group {
+  display: flex;
+  background: rgba(6, 17, 19, 0.85);
+  border: 1px solid var(--crm-border-light);
+  border-radius: var(--radius);
+  padding: 3px;
+  gap: 2px;
+}
+
+.filter-pill {
+  background: none;
+  border: none;
+  color: var(--crm-text-muted);
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.filter-pill:hover {
+  color: #FFFFFF;
+}
+
+.filter-pill.active {
+  background: var(--crm-gold);
+  color: #061113;
+  font-weight: 600;
+}
+
+.btn-refresh {
+  background: rgba(6, 17, 19, 0.85);
+  border: 1px solid var(--crm-border-light);
+  color: var(--crm-text-muted);
+  height: 40px;
+  width: 40px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-refresh:hover {
+  color: var(--crm-gold);
+  border-color: var(--crm-gold);
+}
+
+.btn-refresh svg {
+  width: 17px;
+  height: 17px;
+}
+
+.btn-refresh.is-spinning svg {
+  animation: spin 0.8s linear infinite;
+}
+
+/* ==========================================================================
+   SOLICITAÇÕES DATA TABLE & CARDS
+   ========================================================================== */
+.table-card {
+  background: var(--crm-card);
+  border: 1px solid var(--crm-border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.solicitacoes-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.solicitacoes-table th {
+  background: rgba(6, 17, 19, 0.95);
+  color: var(--crm-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--crm-border-light);
+}
+
+.solicitacoes-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 13.5px;
+  vertical-align: middle;
+}
+
+.solicitacoes-table tr {
+  transition: background-color 0.15s ease;
+}
+
+.solicitacoes-table tr:hover td {
+  background-color: rgba(223, 174, 79, 0.03);
+}
+
+.table-row-new {
+  animation: rowHighlight 2.5s ease;
+}
+
+/* Data Column */
+.cell-date {
+  white-space: nowrap;
+}
+
+.date-time {
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.date-rel {
+  font-size: 11.5px;
+  color: var(--crm-text-muted);
+}
+
+/* Cliente Column */
+.lead-name {
+  font-weight: 600;
+  color: #FFFFFF;
+  font-size: 14.5px;
+}
+
+.lead-pref-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.pref-only-contact {
+  background: rgba(223, 174, 79, 0.12);
+  color: var(--crm-gold);
+  border: 1px solid rgba(223, 174, 79, 0.3);
+}
+
+.pref-with-desc {
+  background: rgba(142, 155, 155, 0.15);
+  color: #B2C2C2;
+  border: 1px solid rgba(142, 155, 155, 0.25);
+}
+
+/* WhatsApp Column */
+.wa-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #8CE39B;
+  background: rgba(75, 181, 67, 0.12);
+  border: 1px solid rgba(75, 181, 67, 0.35);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.wa-link-btn:hover {
+  background: rgba(75, 181, 67, 0.25);
+  border-color: #4BB543;
+  transform: translateY(-1px);
+}
+
+.wa-link-btn svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+}
+
+/* Status Column & Badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.status-badge.status-novo {
+  background: var(--status-novo-bg);
+  color: var(--status-novo-text);
+  border-color: var(--status-novo-border);
+}
+
+.status-badge.status-em-atendimento {
+  background: var(--status-atend-bg);
+  color: var(--status-atend-text);
+  border-color: var(--status-atend-border);
+}
+
+.status-badge.status-aguardando-retorno {
+  background: var(--status-aguard-bg);
+  color: var(--status-aguard-text);
+  border-color: var(--status-aguard-border);
+}
+
+.status-badge.status-concluido {
+  background: var(--status-concl-bg);
+  color: var(--status-concl-text);
+  border-color: var(--status-concl-border);
+}
+
+.status-selector {
+  background: rgba(6, 17, 19, 0.9);
+  border: 1px solid var(--crm-border-light);
+  border-radius: 6px;
+  color: #FFFFFF;
+  font-size: 12px;
+  padding: 5px 8px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.status-selector:focus {
+  border-color: var(--crm-gold);
+}
+
+/* Actions Column */
+.btn-action-view {
+  background: rgba(223, 174, 79, 0.1);
+  border: 1px solid rgba(223, 174, 79, 0.3);
+  color: var(--crm-gold);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-action-view:hover {
+  background: var(--crm-gold);
+  color: #061113;
+}
+
+/* Empty State & Loading State */
+.empty-state {
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--crm-text-muted);
+}
+
+.empty-state svg {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+  color: var(--crm-gold);
+}
+
+.empty-state h3 {
+  font-size: 16px;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+}
+
+.loading-state {
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--crm-text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ==========================================================================
+   MODAL DE DETALHES DA SOLICITAÇÃO
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.modal-backdrop.is-open {
+  display: flex;
+  opacity: 1;
+}
+
+.modal-card {
+  background: var(--crm-card);
+  border: 1px solid var(--crm-border);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  animation: modalSlideUp 0.25s ease;
+}
+
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--crm-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-header h2 {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: var(--crm-text-muted);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.modal-close:hover {
+  color: var(--crm-gold);
+}
+
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.detail-label {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--crm-text-muted);
+  font-weight: 600;
+}
+
+.detail-value {
+  font-size: 15px;
+  color: #FFFFFF;
+}
+
+.detail-case-box {
+  background: rgba(6, 17, 19, 0.85);
+  border: 1px solid var(--crm-border-light);
+  border-radius: var(--radius);
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #D6DCDC;
+  white-space: pre-wrap;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.status-btn-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.btn-status-choice {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--crm-border-light);
+  border-radius: var(--radius);
+  color: #C0C8C8;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-status-choice:hover {
+  border-color: var(--crm-gold);
+}
+
+.btn-status-choice.selected {
+  background: var(--crm-gold);
+  color: #061113;
+  border-color: var(--crm-gold);
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--crm-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Toast Floating Notification */
+.crm-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--crm-card);
+  border: 1px solid var(--crm-border);
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  color: #FFFFFF;
+  font-size: 13.5px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 9999;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.crm-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulseDot {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+@keyframes rowHighlight {
+  0% { background-color: rgba(223, 174, 79, 0.3); }
+  100% { background-color: transparent; }
+}
+
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Responsive Table */
+@media (max-width: 900px) {
+  .crm-header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .crm-user-panel {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .solicitacoes-table th:nth-child(4),
+  .solicitacoes-table td:nth-child(4) {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .status-filter-group {
+    width: 100%;
+    overflow-x: auto;
+  }
+  .solicitacoes-table thead {
+    display: none;
+  }
+  .solicitacoes-table, .solicitacoes-table tbody, .solicitacoes-table tr, .solicitacoes-table td {
+    display: block;
+    width: 100%;
+  }
+  .solicitacoes-table tr {
+    border-bottom: 1px solid var(--crm-border-light);
+    padding: 16px;
+  }
+  .solicitacoes-table td {
+    padding: 6px 0;
+    border: none;
+  }
+}

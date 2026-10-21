@@ -14,8 +14,8 @@ function syncTarget(targetName) {
     fs.copyFileSync(path.join(__dirname, 'index.html'), path.join(targetDir, 'index.html'));
   }
 
-  // Copy folders: css, js, assets
-  const folders = ['css', 'js', 'assets'];
+  // Copy folders: css, js, assets, admin
+  const folders = ['css', 'js', 'assets', 'admin'];
   for (const folder of folders) {
     const srcDir = path.join(__dirname, folder);
     const destDir = path.join(targetDir, folder);

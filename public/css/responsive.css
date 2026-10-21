@@ -39,6 +39,25 @@
   .jornada-content-side {
     padding: 60px 40px;
   }
+
+  /* Google Reviews Section */
+  .reviews-container {
+    gap: 24px;
+  }
+
+  .lady-justice-img {
+    height: 380px;
+    max-width: 210px;
+  }
+
+  .reviews-content-col {
+    gap: 24px;
+  }
+
+  .review-card {
+    flex: 0 0 calc((100% - 20px) / 2);
+    min-width: 240px;
+  }
 }
 
 /* Tablet Portrait (max-width: 768px) */
@@ -146,6 +165,54 @@
   .footer-col:last-child {
     grid-column: span 2;
   }
+
+  /* Google Reviews Section */
+  .google-reviews-section {
+    padding: 40px 0 60px 0;
+  }
+
+  .reviews-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .reviews-statue-col {
+    order: -1;
+  }
+
+  .lady-justice-img {
+    height: 300px;
+    max-width: 180px;
+  }
+
+  .reviews-content-col {
+    width: 100%;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .google-summary-box {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  .reviews-slider-wrapper {
+    width: 100%;
+  }
+
+  .review-card {
+    flex: 0 0 100%;
+    min-width: 100%;
+  }
+
+  .slider-btn.prev-btn {
+    left: -12px;
+  }
+
+  .slider-btn.next-btn {
+    right: -12px;
+  }
 }
 
 /* Mobile Devices (max-width: 480px / 390px) */
@@ -231,21 +298,35 @@
     font-size: 13px;
   }
 
-  /* Jornada */
+  /* Jornada / Formulário */
   .jornada-content-side {
     padding: 40px 18px;
   }
 
   .jornada-title {
-    font-size: 28px;
+    font-size: 26px;
   }
 
-  .jornada-feature {
-    gap: 14px;
+  .jornada-subtitle {
+    font-size: 13.5px;
   }
 
-  .jornada-feature-title {
-    font-size: 20px;
+  .btn-gold-submit {
+    height: 48px;
+    font-size: 14px;
+  }
+
+  .privacy-modal-card {
+    max-height: 92vh;
+  }
+
+  .privacy-modal-header {
+    padding: 16px 18px;
+  }
+
+  .privacy-modal-body {
+    padding: 18px;
+    font-size: 13px;
   }
 
   /* Footer */
@@ -272,5 +353,24 @@
   .whatsapp-btn svg {
     width: 28px;
     height: 28px;
+  }
+
+  /* Google Reviews Section Mobile */
+  .lady-justice-img {
+    height: 230px;
+    max-width: 140px;
+  }
+
+  .slider-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .slider-btn.prev-btn {
+    left: -8px;
+  }
+
+  .slider-btn.next-btn {
+    right: -8px;
   }
 }

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM de Solicitações | Dr. Ricardo Cassiano Advogado</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/webp" href="/assets/images/favicon-32x32.webp">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/admin/css/admin.css?v=2.2">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       TELA DE AUTENTICAÇÃO (SUPABASE AUTH)
+       ========================================================================== -->
+  <div id="auth-screen" class="auth-wrapper">
+    <div class="auth-card">
+      <img src="/assets/images/logo.png?v=1.3" alt="Dr. Ricardo Cassiano Advogado" class="auth-logo">
+      
+      <div class="auth-header">
+        <h1>Painel Administrativo</h1>
+        <p>Acesse com seu e-mail e senha cadastrados no Supabase Auth para gerenciar os contatos.</p>
+      </div>
+
+      <!-- Alerta dinâmico de status da conexão Supabase -->
+      <div id="auth-connection-status" class="auth-connection-badge" style="display: none;"></div>
+
+      <div id="auth-error-box" class="auth-error" role="alert"></div>
+
+      <form id="auth-login-form" class="auth-form" method="POST" novalidate>
+        <div class="form-group">
+          <label for="auth-email" class="form-label">E-mail do Administrador</label>
+          <input type="email" id="auth-email" class="form-input" placeholder="exemplo@advocacia.com" required autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label for="auth-password" class="form-label">Senha de Acesso</label>
+          <input type="password" id="auth-password" class="form-input" placeholder="Sua senha segura" required autocomplete="current-password">
+        </div>
+
+        <button type="submit" id="btn-login-submit" class="btn-auth">
+          <span>Entrar no CRM</span>
+          <span class="btn-spinner" id="login-spinner" style="display:none;" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <div class="auth-config-toggle">
+        <a id="btn-open-config-modal" style="cursor: pointer;">⚙️ Configurações de Conexão Supabase</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       DASHBOARD CRM PRINCIPAL (USUÁRIO AUTENTICADO)
+       ========================================================================== -->
+  <div id="crm-dashboard" style="display: none;">
+    <!-- Header do CRM -->
+    <header class="crm-header">
+      <div class="crm-header-inner">
+        <div class="crm-brand">
+          <img src="/assets/images/logo.png?v=1.3" alt="Ricardo Cassiano Advogado" class="crm-brand-logo">
+          <div class="crm-badge-title">
+            <span class="crm-title">Gestão de Solicitações</span>
+            <span class="crm-subtitle">CRM de Atendimento Jurídico</span>
+          </div>
+        </div>
+
+        <div class="crm-user-panel">
+          <div class="realtime-status-pill" title="Atualização em tempo real via WebSocket ativa">
+            <span class="realtime-dot"></span>
+            <span>Tempo Real Ativo</span>
+          </div>
+
+          <span id="user-display-email" class="user-email">advogado@...</span>
+
+          <button type="button" id="btn-crm-config" class="btn-logout" title="Configurar conexão">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          </button>
+
+          <button type="button" id="btn-logout" class="btn-logout">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            <span>Sair</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="crm-main">
+      <!-- Métricas Resumo -->
+      <section class="metrics-grid" aria-label="Estatísticas de Atendimento">
+        <div class="metric-card metric-total">
+          <div class="metric-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Total de Solicitações</span>
+            <span class="metric-value" id="metric-count-total">0</span>
+          </div>
+        </div>
+
+        <div class="metric-card metric-novo">
+          <div class="metric-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Novos</span>
+            <span class="metric-value" id="metric-count-novo">0</span>
+          </div>
+        </div>
+
+        <div class="metric-card metric-atendimento">
+          <div class="metric-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Em Atendimento</span>
+            <span class="metric-value" id="metric-count-atendimento">0</span>
+          </div>
+        </div>
+
+        <div class="metric-card metric-aguardando">
+          <div class="metric-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Aguardando Retorno</span>
+            <span class="metric-value" id="metric-count-aguardando">0</span>
+          </div>
+        </div>
+
+        <div class="metric-card metric-concluido">
+          <div class="metric-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Concluídos</span>
+            <span class="metric-value" id="metric-count-concluido">0</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Barra de Filtros e Busca -->
+      <section class="toolbar-card">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="crm-search-input" class="search-input" placeholder="Buscar por nome ou WhatsApp...">
+          <button type="button" id="crm-search-clear" class="search-clear" aria-label="Limpar busca">&times;</button>
+        </div>
+
+        <div class="filter-actions">
+          <div class="status-filter-group" role="tablist" aria-label="Filtrar por status">
+            <button type="button" class="filter-pill active" data-filter="Todos">Todos</button>
+            <button type="button" class="filter-pill" data-filter="Novo">Novo</button>
+            <button type="button" class="filter-pill" data-filter="Em atendimento">Em atendimento</button>
+            <button type="button" class="filter-pill" data-filter="Aguardando retorno">Aguardando retorno</button>
+            <button type="button" class="filter-pill" data-filter="Concluído">Concluído</button>
+          </div>
+
+          <button type="button" id="btn-refresh-leads" class="btn-refresh" title="Atualizar lista">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- Tabela de Solicitações -->
+      <section class="table-card">
+        <table class="solicitacoes-table" id="leads-table">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 170px;">Data / Hora</th>
+              <th scope="col">Cliente & Preferência</th>
+              <th scope="col" style="width: 200px;">WhatsApp</th>
+              <th scope="col" style="width: 170px;">Status</th>
+              <th scope="col" style="width: 130px; text-align: right;">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="leads-table-body">
+            <!-- As linhas são inseridas dinamicamente via admin.js -->
+          </tbody>
+        </table>
+
+        <!-- Estado de Carregamento -->
+        <div id="leads-loading" class="loading-state">
+          <div class="btn-spinner" style="display:inline-block; width: 28px; height: 28px; border-width: 3px; border-top-color: var(--crm-gold);" aria-hidden="true"></div>
+          <p>Carregando solicitações...</p>
+        </div>
+
+        <!-- Estado Vazio -->
+        <div id="leads-empty" class="empty-state" style="display: none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path></svg>
+          <h3>Nenhuma solicitação encontrada</h3>
+          <p>Não há contatos cadastrados para os filtros aplicados.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL DE DETALHES DA SOLICITAÇÃO
+       ========================================================================== -->
+  <div id="modal-lead-details" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Detalhes da Solicitação</h2>
+        <button type="button" id="btn-close-lead-modal" class="modal-close" aria-label="Fechar">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="detail-row">
+          <span class="detail-label">Nome Completo</span>
+          <span class="detail-value" id="modal-lead-nome" style="font-weight:600; font-size: 16px;">—</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">WhatsApp</span>
+          <div style="display: flex; align-items: center; gap: 12px; margin-top: 4px;">
+            <span class="detail-value" id="modal-lead-whatsapp" style="font-weight:600;">—</span>
+            <a href="#" id="modal-lead-wa-link" target="_blank" rel="noopener noreferrer" class="wa-link-btn">
+              <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"></path></svg>
+              <span>Conversar no WhatsApp</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Preferência Informada</span>
+          <span class="detail-value" id="modal-lead-pref">—</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Descrição do Caso</span>
+          <div class="detail-case-box" id="modal-lead-descricao">Nenhuma descrição fornecida pelo visitante.</div>
+        </div>
+
+        <div class="detail-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <span class="detail-label">Data de Recebimento</span>
+            <span class="detail-value" id="modal-lead-created" style="font-size:13px;">—</span>
+          </div>
+          <div>
+            <span class="detail-label">Última Atualização</span>
+            <span class="detail-value" id="modal-lead-updated" style="font-size:13px;">—</span>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Alterar Status do Atendimento</span>
+          <div class="status-btn-group" id="modal-status-choices">
+            <button type="button" class="btn-status-choice" data-status="Novo">Novo</button>
+            <button type="button" class="btn-status-choice" data-status="Em atendimento">Em atendimento</button>
+            <button type="button" class="btn-status-choice" data-status="Aguardando retorno">Aguardando retorno</button>
+            <button type="button" class="btn-status-choice" data-status="Concluído">Concluído</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <span id="modal-status-feedback" style="font-size:12.5px; color:#8CE39B;"></span>
+        <button type="button" id="btn-save-lead-details" class="btn-privacy-confirm">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL DE CONFIGURAÇÃO DE CONEXÃO SUPABASE
+       ========================================================================== -->
+  <div id="modal-config-supabase" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width: 520px;">
+      <div class="modal-header">
+        <h2>Conexão Supabase</h2>
+        <button type="button" id="btn-close-config-modal" class="modal-close" aria-label="Fechar">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p style="font-size: 13.5px; color: var(--crm-text-muted);">
+          Informe as credenciais do seu projeto Supabase. Elas são salvas com segurança no seu navegador para conectar à tabela <code>solicitacoes</code> e ao Supabase Auth.
+        </p>
+
+        <div class="form-group">
+          <label for="cfg-supabase-url" class="form-label">Project URL (Supabase)</label>
+          <input type="url" id="cfg-supabase-url" class="form-input" placeholder="https://xyzcompany.supabase.co">
+        </div>
+
+        <div class="form-group">
+          <label for="cfg-supabase-anon" class="form-label">Anon / Public Key</label>
+          <input type="text" id="cfg-supabase-anon" class="form-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+        </div>
+
+        <div id="cfg-status-msg" style="display:none; font-size:13px; padding: 10px; border-radius: 6px;"></div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="btn-cancel-config" class="btn-logout">Cancelar</button>
+        <button type="button" id="btn-save-config" class="btn-auth" style="margin: 0; height: 38px; padding: 0 18px; font-size: 13px;">Salvar Credenciais</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Flutuante de Notificação -->
+  <div id="crm-toast" class="crm-toast" role="status" aria-live="polite">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--crm-gold);"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+    <span id="crm-toast-text">Notificação do sistema</span>
+  </div>
+
+  <!-- Supabase CDN Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <!-- Supabase Config Helper -->
+  <script src="/js/supabase-config.js?v=2.2"></script>
+  <!-- CRM Application Script -->
+  <script src="/admin/js/admin.js?v=2.2"></script>
+</body>
+</html>
