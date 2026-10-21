@@ -713,6 +713,13 @@ body {
 }
 
 /* Actions Column */
+.table-actions-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 .btn-action-view {
   background: rgba(223, 174, 79, 0.1);
   border: 1px solid rgba(223, 174, 79, 0.3);
@@ -731,6 +738,83 @@ body {
 .btn-action-view:hover {
   background: var(--crm-gold);
   color: #061113;
+}
+
+.btn-action-delete {
+  background: rgba(230, 90, 90, 0.08);
+  border: 1px solid rgba(230, 90, 90, 0.28);
+  color: #FFA5A5;
+  padding: 6px 9px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-action-delete:hover {
+  background: rgba(230, 90, 90, 0.25);
+  border-color: #FFA5A5;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.btn-action-delete svg {
+  width: 14px;
+  height: 14px;
+}
+
+.btn-delete-lead {
+  background: rgba(230, 90, 90, 0.1);
+  border: 1px solid rgba(230, 90, 90, 0.35);
+  color: #FFA5A5;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-delete-lead:hover {
+  background: rgba(230, 90, 90, 0.25);
+  border-color: #FFA5A5;
+  color: #FFFFFF;
+}
+
+.btn-delete-lead svg {
+  width: 14px;
+  height: 14px;
+}
+
+.btn-danger-confirm {
+  background: #C93B3B;
+  border: 1px solid #D94E4E;
+  color: #FFFFFF;
+  padding: 8px 18px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-danger-confirm:hover {
+  background: #B52C2C;
+  border-color: #FF6B6B;
+}
+
+.btn-danger-confirm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* Empty State & Loading State */

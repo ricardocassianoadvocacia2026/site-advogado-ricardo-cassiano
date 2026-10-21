@@ -48,6 +48,7 @@
   const modalLead = document.getElementById('modal-lead-details');
   const btnCloseLeadModal = document.getElementById('btn-close-lead-modal');
   const btnSaveLeadDetails = document.getElementById('btn-save-lead-details');
+  const btnModalDeleteLead = document.getElementById('btn-modal-delete-lead');
   const modalNome = document.getElementById('modal-lead-nome');
   const modalWhatsapp = document.getElementById('modal-lead-whatsapp');
   const modalWaLink = document.getElementById('modal-lead-wa-link');
@@ -57,6 +58,17 @@
   const modalUpdated = document.getElementById('modal-lead-updated');
   const modalStatusChoices = document.getElementById('modal-status-choices');
   const modalFeedback = document.getElementById('modal-status-feedback');
+
+  // Modal de Confirmação de Exclusão
+  const modalDelete = document.getElementById('modal-confirm-delete');
+  const btnCloseDeleteModal = document.getElementById('btn-close-delete-modal');
+  const btnCancelDelete = document.getElementById('btn-cancel-delete');
+  const btnConfirmDelete = document.getElementById('btn-confirm-delete');
+  const btnConfirmDeleteText = document.getElementById('btn-confirm-delete-text');
+  const deleteSpinner = document.getElementById('delete-spinner');
+  const deleteLeadName = document.getElementById('delete-lead-name');
+  const deleteLeadPhone = document.getElementById('delete-lead-phone');
+  let leadToDelete = null;
 
   // Modal de Configuração Supabase
   const modalConfig = document.getElementById('modal-config-supabase');
@@ -486,10 +498,15 @@
             </select>
           </td>
           <td style="text-align: right;">
-            <button type="button" class="btn-action-view" data-action="details" data-lead-id="${lead.id}">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-              <span>Detalhes</span>
-            </button>
+            <div class="table-actions-cell">
+              <button type="button" class="btn-action-view" data-action="details" data-lead-id="${lead.id}" title="Ver detalhes da solicitação">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <span>Detalhes</span>
+              </button>
+              <button type="button" class="btn-action-delete" data-action="delete" data-lead-id="${lead.id}" title="Excluir solicitação de ${escapeHtml(lead.nome)}">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+              </button>
+            </div>
           </td>
         </tr>
       `;
@@ -512,6 +529,16 @@
         const leadId = btn.getAttribute('data-lead-id');
         const lead = allLeads.find((item) => item.id === leadId);
         if (lead) openLeadDetails(lead);
+      });
+    });
+
+    // Attach event listeners aos botões de excluir
+    tableBody.querySelectorAll('[data-action="delete"]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const leadId = btn.getAttribute('data-lead-id');
+        const lead = allLeads.find((item) => item.id === leadId);
+        if (lead) openDeleteConfirmation(lead);
       });
     });
   }
@@ -614,6 +641,83 @@
   }
 
   // ==========================================================================
+  // EXCLUSÃO DE SOLICITAÇÃO (LEAD)
+  // ==========================================================================
+  function openDeleteConfirmation(lead) {
+    if (!lead) return;
+    leadToDelete = lead;
+    if (deleteLeadName) deleteLeadName.textContent = lead.nome || 'Cliente';
+    if (deleteLeadPhone) deleteLeadPhone.textContent = lead.whatsapp || 'WhatsApp não informado';
+    if (btnConfirmDelete) btnConfirmDelete.removeAttribute('disabled');
+    if (deleteSpinner) deleteSpinner.style.display = 'none';
+    if (btnConfirmDeleteText) btnConfirmDeleteText.textContent = 'Sim, Excluir';
+
+    if (modalDelete) {
+      modalDelete.classList.add('is-open');
+      modalDelete.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeDeleteConfirmation() {
+    if (modalDelete) {
+      modalDelete.classList.remove('is-open');
+      modalDelete.setAttribute('aria-hidden', 'true');
+    }
+    // Se o modal de detalhes não estiver aberto, restaura o scroll
+    if (!modalLead || !modalLead.classList.contains('is-open')) {
+      document.body.style.overflow = '';
+    }
+    leadToDelete = null;
+  }
+
+  async function executeDeleteLead() {
+    if (!leadToDelete) return;
+    const lead = leadToDelete;
+
+    if (btnConfirmDelete) btnConfirmDelete.setAttribute('disabled', 'disabled');
+    if (deleteSpinner) deleteSpinner.style.display = 'inline-block';
+    if (btnConfirmDeleteText) btnConfirmDeleteText.textContent = 'Excluindo...';
+
+    const supabase = window.SupabaseApp ? window.SupabaseApp.getClient() : null;
+
+    try {
+      if (supabase) {
+        const { error } = await supabase
+          .from('solicitacoes')
+          .delete()
+          .eq('id', lead.id);
+
+        if (error) throw error;
+      } else {
+        // Mock local
+        const local = JSON.parse(localStorage.getItem(window.SupabaseApp.STORAGE_KEYS.LOCAL_LEADS) || '[]');
+        const filtered = local.filter((item) => item.id !== lead.id);
+        localStorage.setItem(window.SupabaseApp.STORAGE_KEYS.LOCAL_LEADS, JSON.stringify(filtered));
+      }
+
+      // Remove do array em memória
+      allLeads = allLeads.filter((item) => item.id !== lead.id);
+
+      // Se modal de detalhes estava aberto para esse lead, fecha
+      if (activeModalLead && activeModalLead.id === lead.id) {
+        closeLeadDetails();
+      }
+
+      closeDeleteConfirmation();
+      renderTable();
+      updateMetrics();
+      showToast(`Solicitação de "${lead.nome}" excluída com sucesso!`);
+    } catch (err) {
+      console.error('Erro ao excluir solicitação:', err);
+      showToast(err.message ? `Erro ao excluir: ${err.message}` : 'Falha ao excluir solicitação do banco de dados.');
+      if (btnConfirmDelete) btnConfirmDelete.removeAttribute('disabled');
+      if (deleteSpinner) deleteSpinner.style.display = 'none';
+      if (btnConfirmDeleteText) btnConfirmDeleteText.textContent = 'Sim, Excluir';
+    }
+  }
+
+  // ==========================================================================
   // CONFIGURAÇÃO SUPABASE MODAL
   // ==========================================================================
   function openConfigModal() {
@@ -690,6 +794,22 @@
       });
     });
 
+    // Modal de Exclusão
+    if (btnCloseDeleteModal) btnCloseDeleteModal.addEventListener('click', closeDeleteConfirmation);
+    if (btnCancelDelete) btnCancelDelete.addEventListener('click', closeDeleteConfirmation);
+    if (btnConfirmDelete) btnConfirmDelete.addEventListener('click', executeDeleteLead);
+    if (btnModalDeleteLead) {
+      btnModalDeleteLead.addEventListener('click', () => {
+        if (activeModalLead) openDeleteConfirmation(activeModalLead);
+      });
+    }
+
+    if (modalDelete) {
+      modalDelete.addEventListener('click', (e) => {
+        if (e.target === modalDelete) closeDeleteConfirmation();
+      });
+    }
+
     // Modal de Configurações
     if (btnOpenConfigAuth) btnOpenConfigAuth.addEventListener('click', openConfigModal);
     if (btnOpenConfigHeader) btnOpenConfigHeader.addEventListener('click', openConfigModal);
@@ -731,8 +851,12 @@
     // Tecla ESC para fechar qualquer modal
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        if (modalLead.classList.contains('is-open')) closeLeadDetails();
-        if (modalConfig.classList.contains('is-open')) closeConfigModal();
+        if (modalDelete && modalDelete.classList.contains('is-open')) {
+          closeDeleteConfirmation();
+          return;
+        }
+        if (modalLead && modalLead.classList.contains('is-open')) closeLeadDetails();
+        if (modalConfig && modalConfig.classList.contains('is-open')) closeConfigModal();
       }
     });
   }
