@@ -105,31 +105,49 @@ button {
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 12px;
 }
 
 .nav-link {
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--color-text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 18px;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.35px;
+  line-height: 1.25;
+  color: #EDE8D0;
+  background: rgba(223, 174, 79, 0.05);
+  border: 1px solid rgba(223, 174, 79, 0.3);
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all var(--transition-fast);
   position: relative;
-  transition: color var(--transition-fast);
-  padding: 6px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.nav-link:hover,
+.nav-link:hover {
+  background: var(--color-gold-button);
+  color: #071518;
+  border-color: transparent;
+  box-shadow: 0 4px 16px rgba(223, 174, 79, 0.4);
+  transform: translateY(-1.5px);
+}
+
 .nav-link.active {
-  color: var(--color-primary);
+  background: var(--color-gold-button);
+  color: #071518;
+  font-weight: 700;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(223, 174, 79, 0.35);
 }
 
 .nav-link.active::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: var(--color-primary);
+  display: none;
 }
 
 .header-cta-btn {
@@ -222,16 +240,27 @@ button {
 }
 
 .mobile-nav-link {
-  font-size: 18px;
-  font-weight: 500;
-  color: var(--color-text-primary);
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 11px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #EDE8D0;
+  background: rgba(223, 174, 79, 0.06);
+  border: 1px solid rgba(223, 174, 79, 0.25);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .mobile-nav-link:hover,
 .mobile-nav-link.active {
-  color: var(--color-primary);
+  background: var(--color-gold-button);
+  color: #071518;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(223, 174, 79, 0.35);
 }
 
 /* ==========================================================================
@@ -332,6 +361,81 @@ button {
   transform: translateY(-2px);
   box-shadow: 0 10px 28px rgba(223, 174, 79, 0.4);
   filter: brightness(1.05);
+}
+
+/* ==========================================================================
+   HERO CTA GROUP & SECONDARY BUTTON (PREENCHER FORMULÁRIO)
+   ========================================================================== */
+.hero-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
+.hero-cta-divider {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.divider-pipe {
+  display: inline-block;
+  color: rgba(223, 174, 79, 0.55);
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(223, 174, 79, 0.3);
+}
+
+.divider-or {
+  display: none;
+}
+
+.btn-secondary-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 28px;
+  background: rgba(223, 174, 79, 0.08);
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary-light);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 0 12px rgba(223, 174, 79, 0.05);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-secondary-gold .btn-secondary-icon {
+  width: 17px;
+  height: 17px;
+  stroke: currentColor;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.btn-secondary-gold:hover {
+  background: rgba(223, 174, 79, 0.22);
+  border-color: #F5EA75;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(223, 174, 79, 0.35);
+  filter: brightness(1.05);
+}
+
+.btn-secondary-gold:hover .btn-secondary-icon {
+  transform: translateX(3px);
 }
 
 .hero-social-proof {

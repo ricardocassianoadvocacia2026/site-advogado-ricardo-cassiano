@@ -21,11 +21,12 @@
   }
 
   .nav-menu {
-    gap: 20px;
+    gap: 8px;
   }
 
   .nav-link {
-    font-size: 14px;
+    font-size: 13px;
+    padding: 6px 12px;
   }
 
   .hero-container {
@@ -215,6 +216,55 @@
   }
 }
 
+/* Small Tablets & Large Phones (max-width: 600px) */
+@media (max-width: 600px) {
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 420px;
+    gap: 10px;
+  }
+
+  .hero-cta-group .btn-gold,
+  .hero-cta-group .btn-secondary-gold {
+    width: 100%;
+    text-align: center;
+    padding: 13px 20px;
+  }
+
+  .divider-pipe {
+    display: none;
+  }
+
+  .hero-cta-divider {
+    width: 100%;
+    margin: 2px 0;
+  }
+
+  .divider-or {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: 100%;
+    color: var(--color-primary);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+    opacity: 0.9;
+  }
+
+  .divider-or::before,
+  .divider-or::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(223, 174, 79, 0.4), transparent);
+  }
+}
+
 /* Mobile Devices (max-width: 480px / 390px) */
 @media (max-width: 480px) {
   :root {
@@ -252,9 +302,49 @@
     font-size: 16px;
   }
 
-  .btn-gold {
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
     width: 100%;
-    padding: 14px 20px;
+    gap: 10px;
+  }
+
+  .hero-cta-group .btn-gold,
+  .hero-cta-group .btn-secondary-gold {
+    width: 100%;
+    text-align: center;
+    padding: 13px 20px;
+  }
+
+  .divider-pipe {
+    display: none;
+  }
+
+  .hero-cta-divider {
+    width: 100%;
+    margin: 2px 0;
+  }
+
+  .divider-or {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: 100%;
+    color: var(--color-primary);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+    opacity: 0.9;
+  }
+
+  .divider-or::before,
+  .divider-or::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(223, 174, 79, 0.4), transparent);
   }
 
   .hero-social-proof {
